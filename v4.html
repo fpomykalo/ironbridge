@@ -143,6 +143,19 @@
   .ticker-wrap{ padding:4vh 0 22vh; }
   .ticker-pin{ will-change:transform; }
   .pin-tail25{ height:25vh; }
+  /* compositor-driven 50% parallax: scroll-linked with zero main-thread involvement,
+     so it cannot lag or jitter; JS fallback covers browsers without view() timelines */
+  @supports (animation-timeline: view()) {
+    .ticker-pin{
+      animation:ticker-par linear both;
+      animation-timeline:view();
+      animation-range:cover calc((100vh + var(--tph, 90px)) / -2) cover calc(100% + (100vh + var(--tph, 90px)) / 2);
+    }
+  }
+  @keyframes ticker-par{
+    from{ transform:translateY(calc((100vh + var(--tph, 90px)) / -2)); }
+    to{ transform:translateY(calc((100vh + var(--tph, 90px)) / 2)); }
+  }
   .ticker-lead{ text-align:center; color:var(--iron); opacity:.9; margin-bottom:42px; }
   .marquee{ overflow:hidden; width:100%; }
   .mtrack{ display:flex; align-items:center; gap:64px; width:max-content; will-change:transform; padding:0 40px; }
@@ -697,8 +710,10 @@
   var secEl=document.querySelector('.sec');
   /* sticky offset: security pins with its title still at the arrival position (140px
      under the nav) — all fourteen rows are on screen there too */
+  var cssParallax=window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
   function sizePins(){
     secEl.style.top=Math.round(140 - parseFloat(getComputedStyle(secEl).paddingTop))+'px';
+    tickerPin.style.setProperty('--tph', tickerPin.offsetHeight+'px');
   }
   sizePins(); addEventListener('resize', sizePins);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(sizePins);
@@ -1107,11 +1122,12 @@
     var span=Math.max(0,track.scrollWidth-marquee.clientWidth);
     mx += (-lt*span-mx)*Math.min(1,dt*8);
     track.style.transform='translateX('+mx+'px)';
-    /* 50% parallax, temporally smoothed at subpixel precision — a raw rounded per-frame
-       write lands one frame behind the scroll and reads as vertical jitter */
-    var pT=(sy-(elTop(tickerPin)+tickerPin.offsetHeight/2-vh/2))*0.5;
-    pY += (pT-pY)*Math.min(1,dt*12);
-    tickerPin.style.transform='translateY('+pY.toFixed(2)+'px)';
+    /* 50% parallax fallback for browsers without scroll-driven animations */
+    if(!cssParallax){
+      var pT=(sy-(elTop(tickerPin)+tickerPin.offsetHeight/2-vh/2))*0.5;
+      pY += (pT-pY)*Math.min(1,dt*12);
+      tickerPin.style.transform='translateY('+pY.toFixed(2)+'px)';
+    }
 
     /* how we work: the card starts growing while it approaches, fills the screen,
        the steps scrub full-bleed, then it dithers away bottom-up and slides off */
