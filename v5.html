@@ -64,20 +64,22 @@
     background:radial-gradient(144.24% 90.15% at 50% 50%, rgba(0,0,0,0) 39.9%, rgba(0,0,0,.92) 100%); }
   .hero-ui{ position:absolute; inset:0; z-index:4; }
 
-  .hero-ui .hwrap{ position:relative; max-width:1440px; height:100%; margin:0 auto; }
-  .hero-h1{ position:absolute; top:calc(50% - 208px); left:50%; transform:translateX(-50%); width:961px; max-width:92vw;
-    text-align:center; font-family:var(--serif); font-weight:400; font-size:140px; line-height:120px; color:var(--ivory); }
-  .hero-sub{ position:absolute; top:calc(50% + 180px); left:50%; transform:translateX(-50%); width:280px; text-align:center;
+  /* one centred stack: sub sits 20px under the headline's glyph bottom, CTA 50px under the sub */
+  .hero-stack{ position:absolute; top:calc(50% - 208px); left:0; right:0;
+    display:flex; flex-direction:column; align-items:center; }
+  .hero-h1{ width:961px; max-width:92vw; text-align:center;
+    font-family:var(--serif); font-weight:400; font-size:140px; line-height:120px; color:var(--ivory); }
+  .hero-sub{ margin-top:0; width:280px; text-align:center;
     font-weight:700; font-size:14px; line-height:20px; color:var(--ivory); }
-  .hero-cta{ position:absolute; top:calc(50% + 260px); left:50%; margin-left:-156.5px; width:313px; height:40px;
+  .hero-cta{ position:relative; margin-top:50px; width:313px; height:40px;
     display:flex; align-items:center; justify-content:center; background:var(--rust); color:var(--ivory);
     border-radius:10px; text-decoration:none; font-family:var(--sans); font-weight:400; font-size:20px; line-height:26px;
     transition:background .3s; }
   .hero-cta:hover{ background:#d95c34; }
   .hero-cta .carw{ position:absolute; right:8px; top:50%; transform:translateY(calc(-50% - 2px)); font-size:20px; line-height:1; }
   /* load-in: sub + CTA slide up once the preloader opens */
-  .up{ opacity:0; transform:translateY(26px) translateX(-50%); transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
-  .hero-ui.in .up{ opacity:1; transform:translateY(0) translateX(-50%); }
+  .up{ opacity:0; transform:translateY(26px); transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+  .hero-ui.in .up{ opacity:1; transform:translateY(0); }
   .hero-ui.in .hero-sub.up{ transition-delay:.55s; }
   .hero-ui.in .hero-cta.up{ transition-delay:.7s; }
 
@@ -130,21 +132,23 @@
   .mtrack img{ display:block; width:auto; }
   @media (prefers-reduced-motion: reduce){ .mtrack{ animation:none; } }
 
-  /* IMPACT */
-  .impact{ position:relative; height:565px; margin-top:200px; }
+  /* IMPACT — its own 1280 box: absolute children anchor to the content, not the wrap padding */
+  .impact{ position:relative; width:1280px; margin:200px auto 0; height:565px; }
   .impact .ttl{ position:absolute; top:0; left:0; right:0; text-align:center; color:var(--iron); }
   .impact .div1{ position:absolute; top:219px; left:0; right:0; }
-  .impact .eyeb{ position:absolute; top:229px; left:20px; color:var(--iron); }
+  .impact .eyeb{ position:absolute; top:229px; left:0; color:var(--iron); }
   .imp-card{ position:absolute; top:265px; width:416px; height:250px; border-radius:10px; overflow:hidden; color:var(--ivory); }
-  .imp-card .img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    transition:transform .7s cubic-bezier(.22,1,.36,1); will-change:transform; }
+  .imp-card .img, .imp-card .photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    transition:transform .7s cubic-bezier(.22,1,.36,1), opacity .7s ease; will-change:transform; }
+  .imp-card .photo{ opacity:0; }
   .imp-card .ov{ position:absolute; inset:0; background:rgba(0,0,0,.2); transition:background .5s; }
-  .imp-card:hover .img{ transform:scale(1.2); }
+  .imp-card:hover .img, .imp-card:hover .photo{ transform:scale(1.2); }
+  .imp-card:hover .photo{ opacity:1; }                        /* the gradient resolves into its photograph */
   .imp-card:hover .ov{ background:rgba(0,0,0,.45); }
-  .imp-card .n{ position:absolute; top:10px; left:0; right:0; text-align:center; }
+  .imp-card .n{ position:absolute; top:10px; left:0; right:0; text-align:center; text-box:trim-both cap alphabetic; }
   .imp-card .stat{ position:absolute; top:90px; left:0; right:0; text-align:center;
-    font-family:var(--serif); font-size:100px; line-height:90px; }
-  .imp-card .lab{ position:absolute; top:234px; left:0; right:0; text-align:center; }
+    font-family:var(--serif); font-size:100px; line-height:90px; text-box:trim-both cap alphabetic; }
+  .imp-card .lab{ position:absolute; top:234px; left:0; right:0; text-align:center; text-box:trim-both cap alphabetic; }
   .imp-col2{ left:432px; } .imp-col3{ left:864px; }
   .impact .cdiv{ position:absolute; top:545px; width:416px; }
   .impact .cbody{ position:absolute; top:555px; width:394px; color:var(--iron); }
@@ -171,52 +175,55 @@
   .hw-num .hbrk img{ height:100%; width:auto; display:block; }
   .hw-num .hbrk.l{ left:calc(50% - 63px); }
   .hw-num .hbrk.r{ left:calc(50% + 38px); }
-  .hw-numwin{ position:absolute; left:50%; margin-left:-30px; width:60px; height:50px; overflow:hidden; }
-  .hw-numwin span{ position:absolute; inset:0; text-align:center; font-family:var(--serif); font-size:70px; line-height:70px; }
-  .hw-verbwin{ position:absolute; top:173px; left:0; right:0; height:110px; overflow:hidden; z-index:2; }
-  .hw-verbwin span{ position:absolute; left:0; right:0; top:0; text-align:center; font-family:var(--serif); font-size:100px; line-height:90px; }
-  .hw-peek{ position:absolute; top:155px; right:0; width:144px; height:106px; overflow:hidden; z-index:1; }
-  .hw-peek span{ position:absolute; left:16px; top:18px; white-space:nowrap; font-family:var(--serif); font-size:100px; line-height:90px;
-    color:rgba(250,247,230,.3); filter:blur(2px); }
+  /* masks carry headroom above the glyph line so dots and ascenders never clip */
+  .hw-numwin{ position:absolute; left:50%; margin-left:-30px; top:-12px; width:60px; height:62px; overflow:hidden; }
+  .hw-numwin span{ position:absolute; left:0; right:0; top:12px; text-align:center; font-family:var(--serif); font-size:70px; line-height:70px;
+    text-box:trim-both cap alphabetic; }
+  .hw-verbwin{ position:absolute; top:146px; left:0; right:0; height:137px; overflow:hidden; z-index:2; }
+  .hw-verbwin span{ position:absolute; left:0; right:0; top:27px; text-align:center; font-family:var(--serif); font-size:100px; line-height:90px;
+    text-box:trim-both cap alphabetic; will-change:transform,filter,opacity; }
+  .hw-peek{ position:absolute; top:145px; right:0; width:144px; height:116px; overflow:hidden; z-index:1; }
+  .hw-peek span{ position:absolute; left:16px; top:28px; white-space:nowrap; font-family:var(--serif); font-size:100px; line-height:90px;
+    color:rgba(250,247,230,.3); filter:blur(2px); text-box:trim-both cap alphabetic; transition:opacity .35s ease; }
   .hw-subwin{ position:absolute; top:365px; left:50%; margin-left:-110.5px; width:221px; height:50px; overflow:hidden; z-index:2; }
   .hw-subwin span{ position:absolute; left:0; right:0; top:0; text-align:center; font-size:14px; line-height:20px; }
 
-  /* GALVANISE — pinned stage; brackets flank the list the way v4 did */
-  .galv-run{ position:relative; height:300vh; margin-top:0; }
-  .galv-stick{ position:sticky; top:0; height:100vh; overflow:hidden; }
-  .galv-head{ position:absolute; top:135px; left:0; right:0; text-align:center; color:var(--ivory); will-change:transform,opacity; }
-  .galv-stage{ position:absolute; inset:0; display:flex; align-items:center; }
-  .galv-geo{ position:relative; width:1280px; max-width:calc(100vw - 160px); height:116px; margin:0 auto; }
-  .galv-tag{ position:absolute; left:0; top:50%; transform:translateY(-50%); display:flex; align-items:center; gap:16px;
-    font-weight:700; font-size:36px; line-height:36px; color:var(--iron); white-space:nowrap; }
+  /* GALVANISE — the v4 stage verbatim: centred flex, big brackets, push-up exit */
+  .galv-run{ position:relative; height:280vh; margin-top:0; }
+  .galv-stick{ position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .galv-head{ position:absolute; top:140px; left:0; right:0; text-align:center; color:var(--ivory); will-change:transform,opacity; }
+  .galv-inner{ position:relative; display:flex; align-items:center; justify-content:center; gap:16px; max-width:calc(100vw - 40px); }
+  .galv-tag{ display:flex; align-items:center; gap:16px; font-weight:700; font-size:36px; line-height:1; color:var(--iron); white-space:nowrap; }
   .galv-tag .gplus{ display:inline-flex; width:17px; height:17px; }
   .galv-tag .gplus img{ width:17px; height:17px; display:block; }
-  .galv-frame{ position:absolute; left:405px; top:50%; transform:translateY(-50%); display:flex; align-items:center; gap:16px; }
-  .galv-brk{ height:116px; flex:none; }
-  .galv-brk img{ height:100%; width:auto; display:block; }
-  .galv-win{ position:relative; height:90px; overflow:visible; }
-  .galv-list{ list-style:none; will-change:transform; }
-  .galv-list li{ font-family:var(--serif); font-size:120px; line-height:90px; white-space:nowrap; color:var(--ivory); margin-bottom:34px; }
+  .galv-frame{ display:flex; align-items:center; gap:16px; }
+  .galv-brk{ height:184px; flex:none; overflow:hidden; }
+  .galv-brk img{ height:100%; width:auto; display:block; transform:translateY(115%); will-change:transform;
+    transition:transform 1.1s cubic-bezier(.22,1,.36,1); }
+  .galv-stick.in .galv-brk img{ transform:translateY(0); }
+  .galv-stick.in .galv-brk.r img{ transition-delay:.35s; }
+  .galv-win{ position:relative; overflow:visible; }
+  .galv-list{ list-style:none; text-align:left; will-change:transform; }
+  .galv-list li{ font-family:var(--serif); font-size:120px; line-height:1.1; white-space:nowrap; color:var(--ivory); }
 
-  /* TO UNLOCK — plain flow, scrolls in from below */
-  .unlock{ margin-top:0; text-align:center; color:var(--ivory); }
+  /* TO UNLOCK — plain flow, pushes the released stage up as it arrives */
+  .unlock{ margin-top:100px; text-align:center; color:var(--ivory); }
   .unlock .us{ margin:30px auto 0; width:416px; max-width:80vw; font-size:14px; line-height:20px; }
 
-  /* MEET THE KNOWLEDGE — static */
-  .know{ margin-top:140px; color:var(--iron); }
-  .know .ttl{ text-align:center; }
-  .know .sub{ margin:9px auto 0; width:880px; max-width:100%; text-align:center; font-size:14px; line-height:20px; }
-  .know-grid{ display:grid; grid-template-columns:repeat(3, 416px); column-gap:16px; margin-top:90px; }
+  /* MEET THE KNOWLEDGE + THE FIVE VERBS — one pin: the head locks, the columns
+     scroll up behind it and mask out, the verbs land beneath it and scrub */
+  .know-run{ position:relative; height:550vh; margin-top:140px; }
+  .know-stick{ position:sticky; top:0; height:100vh; overflow:hidden; color:var(--iron); }
+  .know-head{ position:absolute; top:140px; left:0; right:0; text-align:center; z-index:2; }
+  .know-head .sub{ margin:9px auto 0; width:880px; max-width:100%; font-size:14px; line-height:20px; }
+  .know-window{ position:absolute; top:300px; bottom:0; left:50%; width:1280px; margin-left:-640px; overflow:hidden; }
+  .know-cols{ position:absolute; top:49px; left:0; right:0; display:grid; grid-template-columns:repeat(3, 416px); column-gap:16px; will-change:transform; }
   .kcol{ border-top:1px solid var(--iron); }
   .kcol .cap{ display:flex; justify-content:space-between; margin-top:10px; }
   .kcol .kt{ margin-top:26px; min-height:189px; font-family:var(--serif); font-size:70px; line-height:70px; }
   .kcol .kd{ border-top:1px solid var(--iron); }
   .kcol .kb{ margin-top:10px; font-size:14px; line-height:20px; }
-
-  /* FIVE VERBS — pinned scrub */
-  .verbs-run{ position:relative; height:420vh; margin-top:0; }
-  .verbs-stick{ position:sticky; top:0; height:100vh; display:flex; align-items:center; }
-  .verbs-inner{ position:relative; width:1280px; max-width:calc(100vw - 160px); height:416px; margin:0 auto; color:var(--iron); }
+  .verbs-inner{ position:absolute; top:49px; left:0; width:1280px; height:416px; color:var(--iron); will-change:transform; }
   .verbs-left{ position:absolute; left:0; top:0; width:524px; height:100%; }
   .verbs-left .cap{ border-top:1px solid currentColor; padding-top:10px; }
   .verbs-card{ position:absolute; left:540px; top:0; width:740px; height:416px; border-radius:10px; overflow:hidden; background:#c2ccd5; }
@@ -291,9 +298,9 @@
     </video>
     <div class="hero-shade"></div>
     <div class="hero-vignette"></div>
-    <div class="hero-ui" id="heroUI"><div class="hwrap">
+    <div class="hero-ui" id="heroUI"><div class="hero-stack">
       <h1 class="hero-h1" id="heroH1">The AI department<br>for the everyday<br>economy.</h1>
-      <p class="hero-sub up">We build tailored, enterprise-grade AI<br>for the midmarket.</p>
+      <p class="hero-sub up tbx">We build tailored, enterprise-grade AI<br>for the midmarket.</p>
       <a class="hero-cta up" href="mailto:hello@ironbridge.tech"><span class="lab">Start your AI journey</span><span class="carw">&#8599;</span></a>
     </div></div>
   </section>
@@ -330,20 +337,23 @@
       </section>
 
       <!-- IMPACT SERIES -->
-      <section class="impact wrap" id="impactSec">
+      <section class="impact" id="impactSec">
         <h2 class="ttl h2 rise">AI shouldn&rsquo;t need a multi-million,<br>multi-year plan to see value.</h2>
         <div class="div1 divider reveal"></div>
         <div class="eyeb eyebrow reveal">impact series</div>
         <div class="imp-card reveal" style="left:0">
-          <img class="img" src="assets/v5/images/gradient-1.jpg" alt=""><div class="ov"></div>
+          <img class="img" src="assets/v5/images/gradient-1.jpg" alt="">
+          <img class="photo" src="assets/v5/images/image-1.jpg" alt="" onerror="this.remove()"><div class="ov"></div>
           <div class="n eyebrow">/01</div><div class="stat">4x</div><div class="lab eyebrow">Law Firm</div>
         </div>
         <div class="imp-card imp-col2 reveal">
-          <img class="img" src="assets/v5/images/gradient-2.jpg" alt=""><div class="ov"></div>
+          <img class="img" src="assets/v5/images/gradient-2.jpg" alt="">
+          <img class="photo" src="assets/v5/images/image-2.jpg" alt="" onerror="this.remove()"><div class="ov"></div>
           <div class="n eyebrow">/02</div><div class="stat">100%</div><div class="lab eyebrow">Accountancy</div>
         </div>
         <div class="imp-card imp-col3 reveal">
-          <img class="img" src="assets/v5/images/gradient-3.jpg" alt=""><div class="ov"></div>
+          <img class="img" src="assets/v5/images/gradient-3.jpg" alt="">
+          <img class="photo" src="assets/v5/images/image-3.jpg" alt="" onerror="this.remove()"><div class="ov"></div>
           <div class="n eyebrow">/03</div><div class="stat">3 weeks</div><div class="lab eyebrow">Theatre</div>
         </div>
         <div class="cdiv divider reveal" style="left:0"></div>
@@ -388,23 +398,21 @@
       <div class="galv-run" id="galvRun">
         <div class="galv-stick">
           <div class="galv-head" id="galvHead"><h2 class="h2 rise">Galvanise change across your firm.</h2></div>
-          <div class="galv-stage" id="galvStage">
-            <div class="galv-geo">
-              <div class="galv-tag">Your AI Department
-                <span class="gplus"><img src="assets/svg/plus_dark.svg" alt="+"></span>
+          <div class="galv-inner">
+            <div class="galv-tag">Your AI Department
+              <span class="gplus"><img src="assets/svg/plus_dark.svg" alt="+"></span>
+            </div>
+            <div class="galv-frame">
+              <span class="galv-brk l"><img src="assets/svg/bracket_dark_left.svg" alt=""></span>
+              <div class="galv-win" id="galvWin">
+                <ul class="galv-list" id="galvList">
+                  <li>Finance</li>
+                  <li>Operations</li>
+                  <li>Customer service</li>
+                  <li>New business</li>
+                </ul>
               </div>
-              <div class="galv-frame">
-                <span class="galv-brk l"><img src="assets/svg/bracket_dark_left.svg" alt=""></span>
-                <div class="galv-win" id="galvWin">
-                  <ul class="galv-list" id="galvList">
-                    <li>Finance</li>
-                    <li>Operations</li>
-                    <li>Customer service</li>
-                    <li>New business</li>
-                  </ul>
-                </div>
-                <span class="galv-brk r"><img src="assets/svg/bracket_dark_right.svg" alt=""></span>
-              </div>
+              <span class="galv-brk r"><img src="assets/svg/bracket_dark_right.svg" alt=""></span>
             </div>
           </div>
         </div>
@@ -416,55 +424,55 @@
         <p class="us reveal">Every hour your AI Department gives back goes to the work only your people can do: the judgement, the relationships, the craft.</p>
       </section>
 
-      <!-- MEET THE KNOWLEDGE — static -->
-      <section class="know wrap" id="knowSec">
-        <h2 class="ttl h2 rise">Meet the Knowledge.</h2>
-        <p class="sub reveal">A living map of what your firm knows, brought together in one secure place, kept yours, and put to work.<br>Connects securely to the tools you already run, from documents and mail to CRM and finance.</p>
-        <div class="know-grid">
-          <div class="kcol reveal">
-            <div class="cap"><span class="eyebrow">knowledge</span><span class="eyebrow">/01</span></div>
-            <div class="kt">Your firm already knows.</div>
-            <div class="kd"></div>
-            <p class="kb">Your firm already knows how to win this moment. The problem is where that knowledge lives: scattered across systems, documents and inboxes, and in your best people&rsquo;s heads.</p>
+      <!-- MEET THE KNOWLEDGE + THE FIVE VERBS — one pinned run -->
+      <div class="know-run" id="knowRun">
+        <div class="know-stick">
+          <div class="know-head">
+            <h2 class="ttl h2 rise">Meet the Knowledge.</h2>
+            <p class="sub reveal">A living map of what your firm knows, brought together in one secure place, kept yours, and put to work.<br>Connects securely to the tools you already run, from documents and mail to CRM and finance.</p>
           </div>
-          <div class="kcol reveal">
-            <div class="cap"><span class="eyebrow">knowledge</span><span class="eyebrow">/02</span></div>
-            <div class="kt">A single<br>interface.</div>
-            <div class="kd"></div>
-            <p class="kb">Your team works in one place, drawing on what your firm knows, with security and oversight across everything it does.</p>
-          </div>
-          <div class="kcol reveal">
-            <div class="cap"><span class="eyebrow">knowledge</span><span class="eyebrow">/03</span></div>
-            <div class="kt">Model<br>agnostic.</div>
-            <div class="kd"></div>
-            <p class="kb">Own the knowledge. Rent the intelligence. We run the best model for each task and swap it when a better one arrives. You stay independent of any one provider or cloud vendor.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- THE FIVE VERBS — pinned scrub -->
-      <div class="verbs-run" id="verbsRun">
-        <div class="verbs-stick">
-          <div class="verbs-inner">
-            <div class="verbs-left">
-              <div class="cap eyebrow">The five verbs</div>
-              <div class="srow on" data-i="0" style="top:116px"><span class="idx eyebrow">/01</span><span class="name">Integrates with your systems.</span><span class="arw">&#8599;</span></div>
-              <div class="srow" data-i="1" style="top:186px"><span class="idx eyebrow">/02</span><span class="name">Gets to know your work.</span><span class="arw">&#8599;</span></div>
-              <div class="srow" data-i="2" style="top:256px"><span class="idx eyebrow">/03</span><span class="name">Builds a living map of your firm.</span><span class="arw">&#8599;</span></div>
-              <div class="srow" data-i="3" style="top:326px"><span class="idx eyebrow">/04</span><span class="name">Empowers your every day.</span><span class="arw">&#8599;</span></div>
-              <div class="srow" data-i="4" style="top:396px"><span class="idx eyebrow">/05</span><span class="name">Learns over time.</span><span class="arw">&#8599;</span></div>
+          <div class="know-window">
+            <div class="know-cols" id="knowCols">
+              <div class="kcol">
+                <div class="cap"><span class="eyebrow">knowledge</span><span class="eyebrow">/01</span></div>
+                <div class="kt">Your firm already knows.</div>
+                <div class="kd"></div>
+                <p class="kb">Your firm already knows how to win this moment. The problem is where that knowledge lives: scattered across systems, documents and inboxes, and in your best people&rsquo;s heads.</p>
+              </div>
+              <div class="kcol">
+                <div class="cap"><span></span><span class="eyebrow">/02</span></div>
+                <div class="kt">A single<br>interface.</div>
+                <div class="kd"></div>
+                <p class="kb">Your team works in one place, drawing on what your firm knows, with security and oversight across everything it does.</p>
+              </div>
+              <div class="kcol">
+                <div class="cap"><span></span><span class="eyebrow">/03</span></div>
+                <div class="kt">Model<br>agnostic.</div>
+                <div class="kd"></div>
+                <p class="kb">Own the knowledge. Rent the intelligence. We run the best model for each task and swap it when a better one arrives. You stay independent of any one provider or cloud vendor.</p>
+              </div>
             </div>
-            <div class="verbs-card">
-              <img class="vbg on" src="assets/v5/images/gradient-1.jpg" alt="">
-              <img class="vbg" src="assets/v5/images/gradient-2.jpg" alt="">
-              <img class="vbg" src="assets/v5/images/gradient-3.jpg" alt="">
-              <img class="vbg" src="assets/v5/images/gradient-4.jpg" alt="">
-              <img class="vbg" src="assets/v5/images/gradient-5.jpg" alt="">
-              <div class="vband">
-                <span class="vbrk l"><img src="assets/svg/bracket_dark_left.svg" alt=""></span>
-                <span class="vbrk r"><img src="assets/svg/bracket_dark_right.svg" alt=""></span>
-                <span class="vnumwin eyebrow" id="vNumWin"><span>/01</span></span>
-                <span class="vlabwin eyebrow" id="vLabWin"><span>Integrates with your systems.</span></span>
+            <div class="verbs-inner" id="verbsInner">
+              <div class="verbs-left">
+                <div class="cap eyebrow">The five verbs</div>
+                <div class="srow on" data-i="0" style="top:116px"><span class="idx eyebrow">/01</span><span class="name">Integrates with your systems.</span><span class="arw">&#8599;</span></div>
+                <div class="srow" data-i="1" style="top:186px"><span class="idx eyebrow">/02</span><span class="name">Gets to know your work.</span><span class="arw">&#8599;</span></div>
+                <div class="srow" data-i="2" style="top:256px"><span class="idx eyebrow">/03</span><span class="name">Builds a living map of your firm.</span><span class="arw">&#8599;</span></div>
+                <div class="srow" data-i="3" style="top:326px"><span class="idx eyebrow">/04</span><span class="name">Empowers your every day.</span><span class="arw">&#8599;</span></div>
+                <div class="srow" data-i="4" style="top:396px"><span class="idx eyebrow">/05</span><span class="name">Learns over time.</span><span class="arw">&#8599;</span></div>
+              </div>
+              <div class="verbs-card">
+                <img class="vbg on" src="assets/v5/images/gradient-1.jpg" alt="">
+                <img class="vbg" src="assets/v5/images/gradient-2.jpg" alt="">
+                <img class="vbg" src="assets/v5/images/gradient-3.jpg" alt="">
+                <img class="vbg" src="assets/v5/images/gradient-4.jpg" alt="">
+                <img class="vbg" src="assets/v5/images/gradient-5.jpg" alt="">
+                <div class="vband">
+                  <span class="vbrk l"><img src="assets/svg/bracket_dark_left.svg" alt=""></span>
+                  <span class="vbrk r"><img src="assets/svg/bracket_dark_right.svg" alt=""></span>
+                  <span class="vnumwin eyebrow" id="vNumWin"><span>/01</span></span>
+                  <span class="vlabwin eyebrow" id="vLabWin"><span>Integrates with your systems.</span></span>
+                </div>
               </div>
             </div>
           </div>
@@ -545,8 +553,8 @@
   var heat=document.getElementById('heat'), strapEl=document.querySelector('.strap');
   var forge=document.querySelector('.forge');
   var howRun=document.getElementById('howRun'), galvRun=document.getElementById('galvRun');
-  var verbsRun=document.getElementById('verbsRun');
-  var knowSec=document.getElementById('knowSec'), secSec=document.getElementById('secSec');
+  var knowRun=document.getElementById('knowRun'), secSec=document.getElementById('secSec');
+  var knowCols=document.getElementById('knowCols'), verbsInner=document.getElementById('verbsInner');
   var footEl=document.getElementById('foot');
 
   /* ---------- word-rise machinery ---------- */
@@ -632,7 +640,7 @@
   if(REDUCE) ftag.classList.add('in');
 
   /* ---------- forge gradient: px stops anchored to the sections ---------- */
-  var uiLit=1;
+  var uiLit=1, uiLitB=1;
   var IRON=[8,17,27], IVORY=[250,247,230];
   var BONE=[250,247,230], AMBER=[240,185,118], RUST=[207,81,43], STEEL=[194,204,213], INDIGO=[65,72,138], DEEP=[10,17,26];
   var STOPS=[[0,250,247,230],[1,10,17,26]];
@@ -665,10 +673,11 @@
     var c=forgeColor(f);
     return (0.299*c[0]+0.587*c[1]+0.114*c[2])/255;
   }
-  function chromeTarget(){
-    var mid=scrollY + innerHeight*0.5;
-    if(mid < elTop(forge)) return 1;                          // over the hero footage: ivory chrome
-    var f=(mid - elTop(forge))/forge.offsetHeight;
+  /* each chrome element reads the ground it actually sits on */
+  function chromeTargetAt(yOff){
+    var pos=scrollY + yOff;
+    if(pos < elTop(forge)) return 1;                          // over the hero footage: ivory chrome
+    var f=(pos - elTop(forge))/forge.offsetHeight;
     return forgeLum(f) > 0.55 ? 0 : 1;                        // rust counts as dark ground -> ivory chrome
   }
 
@@ -676,7 +685,7 @@
   var navItems=Array.prototype.slice.call(nav.querySelectorAll('.nitem'));
   function anchorY(key){
     if(key==='department') return elTop(galvRun);
-    if(key==='knowledge')  return elTop(knowSec)-140;
+    if(key==='knowledge')  return elTop(knowRun);
     if(key==='security')   return elTop(secSec)-140;
     return 0;
   }
@@ -689,7 +698,7 @@
   var nbLx=NaN, nbRx=NaN;
   function navKey(mid){
     if(mid < elTop(galvRun)) return 'logo';
-    if(mid < elTop(knowSec)) return 'department';
+    if(mid < elTop(knowRun)) return 'department';
     if(mid < elTop(secSec))  return 'knowledge';
     return 'security';
   }
@@ -775,14 +784,39 @@
   var hwSubWin=document.getElementById('hwSubWin'), hwPeek=document.getElementById('hwPeek');
   var howRows=Array.prototype.slice.call(howRun.querySelectorAll('.srow'));
   var howIdx=0;
+  /* the verb hand-over: the peek word moves in from the side and de-blurs into
+     place while the outgoing word blurs and fades — one continuous motion */
+  function swapVerb(txt, dir){
+    var win=hwVerbWin;
+    while(win.children.length>1) win.removeChild(win.firstElementChild);
+    var old=win.firstElementChild;
+    if(old.textContent===txt) return;
+    hwPeek.style.opacity='0';                                  // the peek hands its word over
+    var nw=old.cloneNode(false); nw.textContent=txt;
+    nw.style.transition='none';
+    nw.style.transform='translateX('+(dir*46)+'%)';
+    nw.style.filter='blur(2px)'; nw.style.opacity='0.3';
+    win.appendChild(nw);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      var tr='transform .7s cubic-bezier(.22,1,.36,1), filter .6s ease, opacity .6s ease';
+      old.style.transition=tr; nw.style.transition=tr;
+      old.style.transform='translateX('+(-dir*40)+'%)'; old.style.filter='blur(2px)'; old.style.opacity='0';
+      nw.style.transform='translateX(0)'; nw.style.filter='blur(0px)'; nw.style.opacity='1';
+      setTimeout(function(){
+        if(old.parentNode===win) win.removeChild(old);
+        nw.style.removeProperty('transition'); nw.style.removeProperty('filter'); nw.style.removeProperty('opacity');
+        hwPeek.textContent = howIdx<3 ? HOW[howIdx+1][1] : '';
+        hwPeek.style.opacity = howIdx<3 ? '1' : '0';
+      }, 720);
+    });});
+  }
   function setHow(i){
     if(i===howIdx) return;
     var dir=i>howIdx?1:-1;
     howIdx=i;
-    swap(hwVerbWin, HOW[i][1], dir, 'x');                      // the verb slides in through the card mask
+    swapVerb(HOW[i][1], dir);
     swap(hwNumWin, HOW[i][0], dir, 'y');                       // brackets hold, the number changes
     swapUp(hwSubWin, HOW[i][2]);
-    hwPeek.textContent = i<3 ? HOW[i+1][1] : '';
     howRows.forEach(function(r,j){ r.classList.toggle('on', j===i); });
   }
   howRows.forEach(function(r){
@@ -802,7 +836,7 @@
   ];
   var vNumWin=document.getElementById('vNumWin'), vLabWin=document.getElementById('vLabWin');
   var vBgs=Array.prototype.slice.call(document.querySelectorAll('.verbs-card .vbg'));
-  var verbRows=Array.prototype.slice.call(verbsRun.querySelectorAll('.srow'));
+  var verbRows=Array.prototype.slice.call(verbsInner.querySelectorAll('.srow'));
   var verbIdx=0;
   function setVerb(i){
     if(i===verbIdx) return;
@@ -816,25 +850,29 @@
   verbRows.forEach(function(r){
     r.addEventListener('click', function(){
       var i=+r.getAttribute('data-i');
-      window.scrollTo({ top:Math.round(elTop(verbsRun)+((i+0.5)/5)*(verbsRun.offsetHeight-innerHeight)), behavior:'smooth' });
+      var kH=knowRun.offsetHeight-innerHeight;
+      window.scrollTo({ top:Math.round(elTop(knowRun)+(0.36+((i+0.5)/5)*0.59)*kH), behavior:'smooth' });
     });
   });
 
-  /* ---------- galvanise ---------- */
-  var galvHead=document.getElementById('galvHead'), galvStage=document.getElementById('galvStage');
+  /* ---------- galvanise (v4 stage) ---------- */
+  var galvHead=document.getElementById('galvHead');
+  var galvStick=document.querySelector('.galv-stick');
+  var galvWin=document.getElementById('galvWin');
   var galvList=document.getElementById('galvList');
   var galvItems=Array.prototype.slice.call(galvList.querySelectorAll('li'));
   var galvRowH=0;
   function measureGalv(){
-    galvRowH=galvItems.length>1 ? galvItems[1].offsetTop-galvItems[0].offsetTop : 124;
+    galvRowH=galvItems.length>1 ? galvItems[1].offsetTop-galvItems[0].offsetTop : 132;
+    galvWin.style.height=galvItems[0].offsetHeight+'px';
   }
-  function galvOpacity(d){                                     // 0 -> 1, 1 -> .3, 2 -> .1, 3+ -> 0
-    if(d<=0) return 1;
-    if(d<=1) return lerp(1,0.3,d);
-    if(d<=2) return lerp(0.3,0.1,d-1);
-    if(d<=3) return lerp(0.1,0,d-2);
-    return 0;
-  }
+  var galvIO=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting) galvStick.classList.add('in');      // brackets rise through their masks
+      else if(e.boundingClientRect.top>innerHeight) galvStick.classList.remove('in');
+    });
+  }, { threshold:0.3 });
+  galvIO.observe(galvStick);
 
   paintForge();
   addEventListener('resize', paintForge);
@@ -877,11 +915,12 @@
     }
     riserFrame(dt);
 
-    /* chrome colour scheme */
-    var target=chromeTarget();
-    uiLit += (target-uiLit)*Math.min(1,dt*7);
+    /* chrome colour scheme: the nav samples at its own bar, the heat + strap at theirs */
+    uiLit += (chromeTargetAt(22)-uiLit)*Math.min(1,dt*7);
+    uiLitB += (chromeTargetAt(vh-55)-uiLitB)*Math.min(1,dt*7);
     var uic='rgb('+Math.round(lerp(IRON[0],IVORY[0],uiLit))+','+Math.round(lerp(IRON[1],IVORY[1],uiLit))+','+Math.round(lerp(IRON[2],IVORY[2],uiLit))+')';
-    nav.style.color=uic; heat.style.color=uic; strapEl.style.color=uic;
+    var uicB='rgb('+Math.round(lerp(IRON[0],IVORY[0],uiLitB))+','+Math.round(lerp(IRON[1],IVORY[1],uiLitB))+','+Math.round(lerp(IRON[2],IVORY[2],uiLitB))+')';
+    nav.style.color=uic; heat.style.color=uicB; strapEl.style.color=uicB;
     wmL.style.opacity=uiLit; wmD.style.opacity=1-uiLit;
     nav.classList.toggle('dark', uiLit<0.5);                   // dark nav: rust button on light ground
 
@@ -919,27 +958,32 @@
     var hp=clamp((sy-elTop(howRun))/(howRun.offsetHeight-vh),0,1);
     setHow(Math.min(3, Math.floor(hp*4)));
 
-    /* five verbs scrub */
-    var vp=clamp((sy-elTop(verbsRun))/(verbsRun.offsetHeight-vh),0,1);
-    setVerb(Math.min(4, Math.floor(vp*5)));
+    /* meet the knowledge pin: columns rise out behind the head, the verbs land
+       beneath it, then the five steps scrub */
+    var kt=elTop(knowRun), kp=clamp((sy-kt)/(knowRun.offsetHeight-vh),0,1);
+    var co=inv(kp,0.05,0.22); co=co*co*(3-2*co);
+    knowCols.style.transform='translateY('+Math.round(-co*(knowCols.offsetHeight+120))+'px)';
+    var vin=inv(kp,0.15,0.32); vin=vin*vin*(3-2*vin);
+    verbsInner.style.transform='translateY('+Math.round((1-vin)*(vh-320))+'px)';
+    setVerb(Math.min(4, Math.floor(inv(kp,0.36,0.95)*5)));
 
-    /* galvanise scrub */
+    /* galvanise scrub — v4 motion: snap between items, no fade; the section is
+       pushed up by what follows once the pin releases */
     var gt=elTop(galvRun), gp=clamp((sy-gt)/(galvRun.offsetHeight-vh),0,1);
-    var posRaw=clamp(gp/0.62,0,1)*(galvItems.length-1);
+    var posRaw=clamp(gp/0.70,0,1)*(galvItems.length-1);
     var pf=Math.floor(posRaw), fr=posRaw-pf;
     var fs=clamp((fr-0.3)/0.4,0,1); fs=fs*fs*(3-2*fs);         // dwell on each item, quick snap between
     var pos=Math.min(pf+fs, galvItems.length-1);
     if(!galvRowH) measureGalv();
     galvList.style.transform='translateY('+(-pos*galvRowH)+'px)';
-    galvItems.forEach(function(li,gi){ li.style.opacity=galvOpacity(Math.abs(gi-pos)); });
+    for(var gi=0; gi<galvItems.length; gi++){
+      var dd=Math.abs(gi-pos);
+      galvItems[gi].style.opacity = dd<0.5 ? 1 : Math.max(0, 0.62-0.21*dd);   // v4 falloff: three away = gone
+    }
     /* heading leaves with the first snap */
     var ghx=clamp(pos,0,1);
     if(ghx>0){ galvHead.style.transform='translateY('+(-ghx*90)+'px)'; galvHead.style.opacity=1-ghx; }
     else { galvHead.style.removeProperty('transform'); galvHead.style.removeProperty('opacity'); }
-    /* stage fades out over the last stretch, then the pin releases */
-    var gFade=1-inv(gp,0.80,0.94);
-    galvStage.style.opacity=gFade;
-    galvStage.style.visibility=gFade<=0?'hidden':'';
 
     requestAnimationFrame(frame);
   }
@@ -964,10 +1008,12 @@
     '  vec2 uv=(cellPx-0.5*res)/res.y;\n'+
     '  float w=waveField(uv,u_time);\n'+
     '  vec2 m=(u_pointer-0.5*res)/res.y; float d=length(uv-m);\n'+
-    '  w+=u_ripple*0.6*sin(d*16.0-u_time*3.2)*exp(-d*2.2);\n'+
+    '  w+=u_ripple*0.9*sin(d*16.0-u_time*3.2)*exp(-d*2.2);\n'+
     '  float horizon=uv.y*1.35+0.4*w+0.35;\n'+
     '  float fill=smoothstep(0.55,-0.55,horizon);\n'+
     '  float intensity=clamp(mix(fill,0.5+0.5*w,0.3)-0.12,0.0,1.0);\n'+
+    '  intensity=clamp(intensity-1.4*u_ripple*exp(-d*1.8),0.0,1.0);\n'+   // the pointer clears the dither around it
+
     '  float vy=gl_FragCoord.y/res.y;\n'+
     '  float mask=smoothstep(0.88,0.15,vy);\n'+
     '  float rnd=fract(sin(dot(cell,vec2(12.9898,78.233)))*43758.5453);\n'+
@@ -1007,7 +1053,7 @@
     function draw(now){
       var t=(now-start)*0.0001;
       ptr.x+=(tgt.x-ptr.x)*0.12; ptr.y+=(tgt.y-ptr.y)*0.12;
-      ripple+=(rippleTarget-ripple)*0.06;
+      ripple+=(rippleTarget-ripple)*0.12;
       gl.uniform1f(uTime,t); gl.uniform2f(uPtr,ptr.x,ptr.y); gl.uniform1f(uRip,ripple);
       gl.drawArrays(gl.TRIANGLES,0,6);
       requestAnimationFrame(draw);
