@@ -195,8 +195,9 @@
   .galv-run{ position:relative; height:280vh; margin-top:0; }
   .galv-stick{ position:sticky; top:0; height:100vh; overflow:hidden; }
   .galv-head{ position:absolute; top:40px; left:0; right:0; text-align:center; color:var(--ivory); will-change:transform,opacity; }
-  /* the bracket row opens 100px under the heading's baseline (40 + 59.5 + 100) */
-  .galv-inner{ position:absolute; top:200px; left:0; right:0; display:flex; align-items:center; justify-content:center; gap:16px; }
+  /* the tag + bracket row holds the middle of the viewport while pinned */
+  .galv-inner{ position:absolute; top:50%; left:0; right:0; transform:translateY(-50%);
+    display:flex; align-items:center; justify-content:center; gap:16px; }
   .galv-tag{ display:flex; align-items:center; gap:16px; font-weight:700; font-size:36px; line-height:1; color:var(--iron); white-space:nowrap; }
   .galv-tag .gplus{ display:inline-flex; width:17px; height:17px; }
   .galv-tag .gplus img{ width:17px; height:17px; display:block; }
@@ -693,7 +694,7 @@
   /* ---------- nav: anchors, arrows, travelling brackets ---------- */
   var navItems=Array.prototype.slice.call(nav.querySelectorAll('.nitem'));
   function anchorY(key){
-    if(key==='department') return elTop(galvRun);
+    if(key==='department') return elTop(forge)+59;             // lands with "Built & supported…" 140 under the nav
     if(key==='knowledge')  return elTop(knowRun);
     if(key==='security')   return elTop(secSec)-140;
     return 0;
@@ -706,7 +707,7 @@
   nlogo.addEventListener('click', function(e){ e.preventDefault(); window.scrollTo({ top:0, behavior:'smooth' }); });
   var nbLx=NaN, nbRx=NaN;
   function navKey(mid){
-    if(mid < elTop(galvRun)) return 'logo';
+    if(mid < elTop(forge))   return 'logo';                    // the department begins with the operator logos
     if(mid < elTop(knowRun)) return 'department';
     if(mid < elTop(secSec))  return 'knowledge';
     return 'security';
