@@ -65,8 +65,8 @@
   .hero-ui{ position:absolute; inset:0; z-index:4; }
 
   /* one centred stack: sub sits 20px under the headline's glyph bottom, CTA 50px under the sub */
-  .hero-stack{ position:absolute; top:50%; left:0; right:0; transform:translateY(-50%);
-    display:flex; flex-direction:column; align-items:center; }   /* the whole block self-centres at any viewport */
+  .hero-stack{ position:absolute; top:calc(50% + 50px); left:0; right:0; transform:translateY(-50%);
+    display:flex; flex-direction:column; align-items:center; }   /* centred at any viewport, sat 50px low */
   .hero-h1{ width:961px; max-width:92vw; text-align:center;
     font-family:var(--serif); font-weight:400; font-size:140px; line-height:120px; color:var(--ivory); }
   .hero-sub{ margin-top:36px; width:280px; text-align:center;   /* 40px below the y-descender of "economy." (ink bottom measured at 618) */
@@ -92,6 +92,7 @@
   .nav .nlogo img{ position:absolute; inset:0; width:100%; height:100%; display:block; }
   .nav .wm-d{ opacity:0; }
   .nav .nitem{ position:absolute; top:2px; font-weight:400; font-size:14px; line-height:20px; white-space:nowrap; cursor:pointer; }
+  .nav .nitem.act{ font-weight:700; }                          /* the bracketed section reads bold */
   .nav .nitem .narw{ display:inline-block; margin-left:6px; }
   /* light chrome (dark ground): bone fill · dark chrome (light ground): rust fill — never an outline */
   .nav .ncta{ position:absolute; right:10px; top:0; width:220px; height:25px; border-radius:4px;
@@ -191,9 +192,10 @@
 
   /* GALVANISE — the v4 stage verbatim: centred flex, big brackets, push-up exit */
   .galv-run{ position:relative; height:280vh; margin-top:0; }
-  .galv-stick{ position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .galv-stick{ position:sticky; top:0; height:100vh; overflow:hidden; }
   .galv-head{ position:absolute; top:40px; left:0; right:0; text-align:center; color:var(--ivory); will-change:transform,opacity; }
-  .galv-inner{ position:relative; display:flex; align-items:center; justify-content:center; gap:16px; max-width:calc(100vw - 40px); }
+  /* the bracket row opens 100px under the heading's baseline (40 + 59.5 + 100) */
+  .galv-inner{ position:absolute; top:200px; left:0; right:0; display:flex; align-items:center; justify-content:center; gap:16px; }
   .galv-tag{ display:flex; align-items:center; gap:16px; font-weight:700; font-size:36px; line-height:1; color:var(--iron); white-space:nowrap; }
   .galv-tag .gplus{ display:inline-flex; width:17px; height:17px; }
   .galv-tag .gplus img{ width:17px; height:17px; display:block; }
@@ -937,6 +939,7 @@
     if(isNaN(nbLx)){ nbLx=tl; nbRx=tr; }
     nbLx+=(tl-nbLx)*Math.min(1,dt*9); nbRx+=(tr-nbRx)*Math.min(1,dt*9);
     nbL.style.left=nbLx+'px'; nbR.style.left=nbRx+'px';
+    navItems.forEach(function(it){ it.classList.toggle('act', it.getAttribute('data-sec')===key); });
     var brkVis = mid<elTop(footEl) ? 1 : 0;
     nbL.style.opacity=brkVis; nbR.style.opacity=brkVis;
 
