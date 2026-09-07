@@ -65,8 +65,8 @@
   .hero-ui{ position:absolute; inset:0; z-index:4; }
 
   /* one centred stack: sub sits 20px under the headline's glyph bottom, CTA 50px under the sub */
-  .hero-stack{ position:absolute; top:calc(50% - 208px); left:0; right:0;
-    display:flex; flex-direction:column; align-items:center; }
+  .hero-stack{ position:absolute; top:50%; left:0; right:0; transform:translateY(-50%);
+    display:flex; flex-direction:column; align-items:center; }   /* the whole block self-centres at any viewport */
   .hero-h1{ width:961px; max-width:92vw; text-align:center;
     font-family:var(--serif); font-weight:400; font-size:140px; line-height:120px; color:var(--ivory); }
   .hero-sub{ margin-top:36px; width:280px; text-align:center;   /* 40px below the y-descender of "economy." (ink bottom measured at 618) */
@@ -209,17 +209,17 @@
 
   /* TO UNLOCK — scrolls in over the pinned stage; the pin releases the moment it
      comes 100px from the list, so they travel up together from there */
-  .unlock{ position:relative; z-index:2; margin-top:calc(700px - 100vh); text-align:center; color:var(--ivory); }
-  .unlock .us{ margin:30px auto 0; width:416px; max-width:80vw; font-size:14px; line-height:20px; }
+  .unlock{ position:relative; z-index:2; margin-top:calc(700px - 100vh); text-align:center; color:var(--iron); }
+  .unlock .us{ margin:25px auto 0; width:416px; max-width:80vw; font-size:14px; line-height:20px; }   /* 40px title-baseline -> body */
 
   /* MEET THE KNOWLEDGE + THE FIVE VERBS — one pin: the head locks, the columns
      scroll up behind it and mask out, the verbs land beneath it and scrub */
   .know-run{ position:relative; height:calc(100vh + 1900px); margin-top:140px; }   /* real height set from the measured columns */
   .know-stick{ position:sticky; top:0; height:100vh; overflow:hidden; color:var(--iron); }
   .know-head{ position:absolute; top:140px; left:0; right:0; text-align:center; z-index:2; }
-  .know-head .sub{ margin:9px auto 0; width:880px; max-width:100%; font-size:14px; line-height:20px; }
+  .know-head .sub{ margin:25px auto 0; width:880px; max-width:100%; font-size:14px; line-height:20px; }   /* 40px title-baseline -> body */
   /* window opens 100px under the head; the verbs also come to rest here */
-  .know-window{ position:absolute; top:359px; bottom:0; left:50%; width:1280px; margin-left:-640px; overflow:hidden; }
+  .know-window{ position:absolute; top:375px; bottom:0; left:50%; width:1280px; margin-left:-640px; overflow:hidden; }
   .know-cols{ position:absolute; top:0; left:0; right:0; display:grid; grid-template-columns:repeat(3, 416px); column-gap:16px; will-change:transform; }
   .kcol{ border-top:1px solid var(--iron); }
   .kcol .cap{ display:flex; justify-content:space-between; margin-top:10px; }
@@ -241,11 +241,12 @@
   .vlabwin{ position:absolute; right:54px; top:8.5px; width:300px; height:10px; overflow:hidden; text-align:right; }
   .vlabwin span{ position:absolute; inset:0; }
 
-  /* SECURITY */
-  .sec{ margin-top:0; color:var(--iron); }
+  /* SECURITY — lands 200px after the verbs card; the grid reserves one expanded
+     row of space so a hover never shifts the CTA card below */
+  .sec{ margin-top:calc(991px - 100vh); color:var(--iron); }
   .sec .ttl{ text-align:center; }
-  .sec .ssub{ margin:9px auto 0; width:280px; text-align:center; font-size:14px; line-height:20px; }
-  .sec-grid{ display:grid; grid-template-columns:632px 632px; column-gap:16px; margin-top:90px; align-items:start; }
+  .sec .ssub{ margin:25px auto 0; width:280px; text-align:center; font-size:14px; line-height:20px; }   /* 40px title-baseline -> body */
+  .sec-grid{ display:grid; grid-template-columns:632px 632px; column-gap:16px; margin-top:90px; align-items:start; height:284px; }
   .sit{ border-top:1px solid currentColor; height:71px; transition:height .45s cubic-bezier(.22,1,.36,1); overflow:hidden; position:relative; }
   .sit .idx{ position:absolute; left:0; top:10px; }
   .sit .stt{ position:absolute; left:108px; top:10px; font-weight:700; font-size:14px; line-height:20px; }
@@ -255,7 +256,7 @@
   .sit:hover .sbody{ opacity:1; transform:none; }
 
   /* CTA */
-  .ctasec{ margin-top:200px; }
+  .ctasec{ margin-top:129px; }   /* + the grid's 71px reserve = 200px felt gap to the card */
   .cta-card{ position:relative; width:1280px; max-width:100%; height:798px; border-radius:10px; overflow:hidden;
     background:#0c1622; color:var(--ivory); margin:0 auto; }
   .cta-card .bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
