@@ -69,7 +69,7 @@
     display:flex; flex-direction:column; align-items:center; }
   .hero-h1{ width:961px; max-width:92vw; text-align:center;
     font-family:var(--serif); font-weight:400; font-size:140px; line-height:120px; color:var(--ivory); }
-  .hero-sub{ margin-top:0; width:280px; text-align:center;
+  .hero-sub{ margin-top:16px; width:280px; text-align:center;   /* 20px below the y-descender of "economy." (ink bottom measured at 618) */
     font-weight:700; font-size:14px; line-height:20px; color:var(--ivory); }
   .hero-cta{ position:relative; margin-top:50px; width:313px; height:40px;
     display:flex; align-items:center; justify-content:center; background:var(--rust); color:var(--ivory);
@@ -157,8 +157,8 @@
   .how-run{ position:relative; height:360vh; margin-top:0; }   /* the pin's own centring supplies the Figma gap */
   .how-stick{ position:sticky; top:0; height:100vh; display:flex; align-items:center; }
   .how-inner{ position:relative; width:1280px; max-width:calc(100vw - 160px); height:415px; margin:0 auto; }
-  .how-left{ position:absolute; left:0; top:0; width:524px; height:100%; color:var(--ivory); }
-  .how-left .ttl{ position:absolute; top:20px; left:0; color:var(--ivory); }
+  .how-left{ position:absolute; left:0; top:0; width:524px; height:100%; color:var(--iron); }
+  .how-left .ttl{ position:absolute; top:20px; left:0; color:var(--iron); }
   .srow{ position:absolute; left:0; width:100%; height:70px; border-top:1px solid currentColor; cursor:pointer;
     opacity:.3; transition:opacity .45s; }
   .srow.on{ opacity:1; }
@@ -185,7 +185,7 @@
   .hw-peek{ position:absolute; top:145px; right:0; width:144px; height:116px; overflow:hidden; z-index:1; }
   .hw-peek span{ position:absolute; left:16px; top:28px; white-space:nowrap; font-family:var(--serif); font-size:100px; line-height:90px;
     color:rgba(250,247,230,.3); filter:blur(2px); text-box:trim-both cap alphabetic; transition:opacity .35s ease; }
-  .hw-subwin{ position:absolute; top:365px; left:50%; margin-left:-110.5px; width:221px; height:50px; overflow:hidden; z-index:2; }
+  .hw-subwin{ position:absolute; top:365px; left:50%; margin-left:-150px; width:300px; height:50px; overflow:hidden; z-index:2; }
   .hw-subwin span{ position:absolute; left:0; right:0; top:0; text-align:center; font-size:14px; line-height:20px; }
 
   /* GALVANISE — the v4 stage verbatim: centred flex, big brackets, push-up exit */
@@ -206,24 +206,25 @@
   .galv-list{ list-style:none; text-align:left; will-change:transform; }
   .galv-list li{ font-family:var(--serif); font-size:120px; line-height:1.1; white-space:nowrap; color:var(--ivory); }
 
-  /* TO UNLOCK — plain flow, pushes the released stage up as it arrives */
-  .unlock{ margin-top:100px; text-align:center; color:var(--ivory); }
+  /* TO UNLOCK — scrolls in over the pinned stage; the pin releases the moment it
+     comes 100px from the list, so they travel up together from there */
+  .unlock{ position:relative; z-index:2; margin-top:calc(600px - 100vh); text-align:center; color:var(--ivory); }
   .unlock .us{ margin:30px auto 0; width:416px; max-width:80vw; font-size:14px; line-height:20px; }
 
   /* MEET THE KNOWLEDGE + THE FIVE VERBS — one pin: the head locks, the columns
      scroll up behind it and mask out, the verbs land beneath it and scrub */
-  .know-run{ position:relative; height:550vh; margin-top:140px; }
+  .know-run{ position:relative; height:calc(100vh + 2000px); margin-top:140px; }
   .know-stick{ position:sticky; top:0; height:100vh; overflow:hidden; color:var(--iron); }
   .know-head{ position:absolute; top:140px; left:0; right:0; text-align:center; z-index:2; }
   .know-head .sub{ margin:9px auto 0; width:880px; max-width:100%; font-size:14px; line-height:20px; }
-  .know-window{ position:absolute; top:300px; bottom:0; left:50%; width:1280px; margin-left:-640px; overflow:hidden; }
-  .know-cols{ position:absolute; top:49px; left:0; right:0; display:grid; grid-template-columns:repeat(3, 416px); column-gap:16px; will-change:transform; }
+  .know-window{ position:absolute; top:280px; bottom:0; left:50%; width:1280px; margin-left:-640px; overflow:hidden; }
+  .know-cols{ position:absolute; top:0; left:0; right:0; display:grid; grid-template-columns:repeat(3, 416px); column-gap:16px; will-change:transform; }
   .kcol{ border-top:1px solid var(--iron); }
   .kcol .cap{ display:flex; justify-content:space-between; margin-top:10px; }
   .kcol .kt{ margin-top:26px; min-height:189px; font-family:var(--serif); font-size:70px; line-height:70px; }
   .kcol .kd{ border-top:1px solid var(--iron); }
   .kcol .kb{ margin-top:10px; font-size:14px; line-height:20px; }
-  .verbs-inner{ position:absolute; top:49px; left:0; width:1280px; height:416px; color:var(--iron); will-change:transform; }
+  .verbs-inner{ position:absolute; top:0; left:0; width:1280px; height:416px; color:var(--iron); will-change:transform; }
   .verbs-left{ position:absolute; left:0; top:0; width:524px; height:100%; }
   .verbs-left .cap{ border-top:1px solid currentColor; padding-top:10px; }
   .verbs-card{ position:absolute; left:540px; top:0; width:740px; height:416px; border-radius:10px; overflow:hidden; background:#c2ccd5; }
@@ -381,7 +382,7 @@
                 <source src="assets/v5/videos/video-2.mp4" type="video/mp4">
               </video>
               <div class="veil"></div>
-              <div class="hw-peek"><span class="tbx" id="hwPeek">Deploy.</span></div>
+              <div class="hw-peek" id="hwPeekWin"><span class="tbx" id="hwPeek">Deploy.</span></div>
               <div class="hw-num">
                 <span class="hbrk l"><img src="assets/svg/bracket_light_left.svg" alt=""></span>
                 <span class="hw-numwin" id="hwNumWin"><span class="tbx">1</span></span>
@@ -747,12 +748,12 @@
     if(old.textContent===txt) return;
     var nw=old.cloneNode(false); nw.textContent=txt;
     var ax=axis==='y'?'translateY':'translateX';
-    nw.style.transition='none'; nw.style.transform=ax+'('+(dir*110)+'%)';
+    nw.style.transition='none'; nw.style.transform=ax+'('+(dir*135)+'%)';
     win.appendChild(nw);
     requestAnimationFrame(function(){ requestAnimationFrame(function(){
       var tr='transform .6s cubic-bezier(.22,1,.36,1)';
       old.style.transition=tr; nw.style.transition=tr;
-      old.style.transform=ax+'('+(-dir*110)+'%)'; nw.style.transform=ax+'(0%)';
+      old.style.transform=ax+'('+(-dir*135)+'%)'; nw.style.transform=ax+'(0%)';
       setTimeout(function(){ if(old.parentNode===win) win.removeChild(old); nw.style.removeProperty('transition'); }, 640);
     });});
   }
@@ -784,14 +785,14 @@
   var hwSubWin=document.getElementById('hwSubWin'), hwPeek=document.getElementById('hwPeek');
   var howRows=Array.prototype.slice.call(howRun.querySelectorAll('.srow'));
   var howIdx=0;
-  /* the verb hand-over: the peek word moves in from the side and de-blurs into
-     place while the outgoing word blurs and fades — one continuous motion */
+  /* the verb hand-over: everything rides one belt — the incoming word travels in
+     from the peek's side while de-blurring, and the next word slides into the
+     peek frame on the same beat */
   function swapVerb(txt, dir){
     var win=hwVerbWin;
     while(win.children.length>1) win.removeChild(win.firstElementChild);
     var old=win.firstElementChild;
     if(old.textContent===txt) return;
-    hwPeek.style.opacity='0';                                  // the peek hands its word over
     var nw=old.cloneNode(false); nw.textContent=txt;
     nw.style.transition='none';
     nw.style.transform='translateX('+(dir*46)+'%)';
@@ -805,16 +806,16 @@
       setTimeout(function(){
         if(old.parentNode===win) win.removeChild(old);
         nw.style.removeProperty('transition'); nw.style.removeProperty('filter'); nw.style.removeProperty('opacity');
-        hwPeek.textContent = howIdx<3 ? HOW[howIdx+1][1] : '';
-        hwPeek.style.opacity = howIdx<3 ? '1' : '0';
       }, 720);
     });});
   }
+  var hwPeekWin=document.getElementById('hwPeekWin');
   function setHow(i){
     if(i===howIdx) return;
     var dir=i>howIdx?1:-1;
     howIdx=i;
     swapVerb(HOW[i][1], dir);
+    swap(hwPeekWin, i<3 ? HOW[i+1][1] : '', dir, 'x');         // the following word rolls into the peek frame
     swap(hwNumWin, HOW[i][0], dir, 'y');                       // brackets hold, the number changes
     swapUp(hwSubWin, HOW[i][2]);
     howRows.forEach(function(r,j){ r.classList.toggle('on', j===i); });
@@ -850,8 +851,7 @@
   verbRows.forEach(function(r){
     r.addEventListener('click', function(){
       var i=+r.getAttribute('data-i');
-      var kH=knowRun.offsetHeight-innerHeight;
-      window.scrollTo({ top:Math.round(elTop(knowRun)+(0.36+((i+0.5)/5)*0.59)*kH), behavior:'smooth' });
+      window.scrollTo({ top:Math.round(elTop(knowRun)+800+(i+0.5)*200), behavior:'smooth' });
     });
   });
 
@@ -958,14 +958,14 @@
     var hp=clamp((sy-elTop(howRun))/(howRun.offsetHeight-vh),0,1);
     setHow(Math.min(3, Math.floor(hp*4)));
 
-    /* meet the knowledge pin: columns rise out behind the head, the verbs land
-       beneath it, then the five steps scrub */
-    var kt=elTop(knowRun), kp=clamp((sy-kt)/(knowRun.offsetHeight-vh),0,1);
-    var co=inv(kp,0.05,0.22); co=co*co*(3-2*co);
+    /* meet the knowledge pin: the columns start rising the moment the pin lands,
+       the verbs follow straight in, then 200px of scroll per verb */
+    var kpx=sy-elTop(knowRun);
+    var co=inv(kpx,0,500); co=co*co*(3-2*co);
     knowCols.style.transform='translateY('+Math.round(-co*(knowCols.offsetHeight+120))+'px)';
-    var vin=inv(kp,0.15,0.32); vin=vin*vin*(3-2*vin);
-    verbsInner.style.transform='translateY('+Math.round((1-vin)*(vh-320))+'px)';
-    setVerb(Math.min(4, Math.floor(inv(kp,0.36,0.95)*5)));
+    var vin=inv(kpx,300,800); vin=vin*vin*(3-2*vin);
+    verbsInner.style.transform='translateY('+Math.round((1-vin)*(vh-280))+'px)';
+    setVerb(Math.min(4, Math.floor(inv(kpx,800,1800)*5)));
 
     /* galvanise scrub — v4 motion: snap between items, no fade; the section is
        pushed up by what follows once the pin releases */
@@ -1008,11 +1008,11 @@
     '  vec2 uv=(cellPx-0.5*res)/res.y;\n'+
     '  float w=waveField(uv,u_time);\n'+
     '  vec2 m=(u_pointer-0.5*res)/res.y; float d=length(uv-m);\n'+
-    '  w+=u_ripple*0.9*sin(d*16.0-u_time*3.2)*exp(-d*2.2);\n'+
+    '  w+=u_ripple*0.25*sin(d*16.0-u_time*3.2)*exp(-d*3.0);\n'+
     '  float horizon=uv.y*1.35+0.4*w+0.35;\n'+
     '  float fill=smoothstep(0.55,-0.55,horizon);\n'+
     '  float intensity=clamp(mix(fill,0.5+0.5*w,0.3)-0.12,0.0,1.0);\n'+
-    '  intensity=clamp(intensity-1.4*u_ripple*exp(-d*1.8),0.0,1.0);\n'+   // the pointer clears the dither around it
+    '  intensity=clamp(intensity-1.4*u_ripple*exp(-d*4.2),0.0,1.0);\n'+   // a tight pocket around the pointer thins the dither away
 
     '  float vy=gl_FragCoord.y/res.y;\n'+
     '  float mask=smoothstep(0.88,0.15,vy);\n'+
