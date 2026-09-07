@@ -194,7 +194,8 @@
   /* GALVANISE — the v4 stage verbatim: centred flex, big brackets, push-up exit */
   .galv-run{ position:relative; height:280vh; margin-top:0; }
   .galv-stick{ position:sticky; top:0; height:100vh; overflow:hidden; }
-  .galv-head{ position:absolute; top:40px; left:0; right:0; text-align:center; color:var(--ivory); will-change:transform,opacity; }
+  /* heading baseline sits 100px above the locked bracket row (row top = 50% - 92) */
+  .galv-head{ position:absolute; top:calc(50% - 252px); left:0; right:0; text-align:center; color:var(--ivory); will-change:transform,opacity; }
   /* the tag + bracket row holds the middle of the viewport while pinned */
   .galv-inner{ position:absolute; top:50%; left:0; right:0; transform:translateY(-50%);
     display:flex; align-items:center; justify-content:center; gap:16px; }
