@@ -154,7 +154,7 @@
   .impact .cbody{ position:absolute; top:555px; width:394px; color:var(--iron); }
 
   /* HOW WE WORK — pinned scrub */
-  .how-run{ position:relative; height:360vh; margin-top:0; }   /* the pin's own centring supplies the Figma gap */
+  .how-run{ position:relative; height:250vh; margin-top:0; }   /* the pin's own centring supplies the Figma gap */
   .how-stick{ position:sticky; top:0; height:100vh; display:flex; align-items:center; }
   .how-inner{ position:relative; width:1280px; max-width:calc(100vw - 160px); height:415px; margin:0 auto; }
   .how-left{ position:absolute; left:0; top:0; width:524px; height:100%; color:var(--iron); }
@@ -179,19 +179,20 @@
   .hw-numwin{ position:absolute; left:50%; margin-left:-30px; top:-12px; width:60px; height:62px; overflow:hidden; }
   .hw-numwin span{ position:absolute; left:0; right:0; top:12px; text-align:center; font-family:var(--serif); font-size:70px; line-height:70px;
     text-box:trim-both cap alphabetic; }
-  .hw-verbwin{ position:absolute; top:146px; left:0; right:0; height:137px; overflow:hidden; z-index:2; }
-  .hw-verbwin span{ position:absolute; left:0; right:0; top:27px; text-align:center; font-family:var(--serif); font-size:100px; line-height:90px;
-    text-box:trim-both cap alphabetic; will-change:transform,filter,opacity; }
-  .hw-peek{ position:absolute; top:145px; right:0; width:144px; height:116px; overflow:hidden; z-index:1; }
-  .hw-peek span{ position:absolute; left:16px; top:28px; white-space:nowrap; font-family:var(--serif); font-size:100px; line-height:90px;
-    color:rgba(250,247,230,.3); filter:blur(2px); text-box:trim-both cap alphabetic; transition:opacity .35s ease; }
+  /* the verb belt: four persistent words on one horizontal axis — they slide,
+     blur and fade by their distance from the active step; the card edge masks */
+  .hw-belt{ position:absolute; inset:0; z-index:2; pointer-events:none; }
+  .hw-belt span{ position:absolute; left:50%; top:173px; white-space:nowrap;
+    font-family:var(--serif); font-size:100px; line-height:90px; color:var(--ivory);
+    text-box:trim-both cap alphabetic; will-change:transform,filter,opacity;
+    transition:transform .7s cubic-bezier(.22,1,.36,1), filter .6s ease, opacity .6s ease; }
   .hw-subwin{ position:absolute; top:365px; left:50%; margin-left:-150px; width:300px; height:50px; overflow:hidden; z-index:2; }
   .hw-subwin span{ position:absolute; left:0; right:0; top:0; text-align:center; font-size:14px; line-height:20px; }
 
   /* GALVANISE — the v4 stage verbatim: centred flex, big brackets, push-up exit */
   .galv-run{ position:relative; height:280vh; margin-top:0; }
   .galv-stick{ position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-  .galv-head{ position:absolute; top:140px; left:0; right:0; text-align:center; color:var(--ivory); will-change:transform,opacity; }
+  .galv-head{ position:absolute; top:40px; left:0; right:0; text-align:center; color:var(--ivory); will-change:transform,opacity; }
   .galv-inner{ position:relative; display:flex; align-items:center; justify-content:center; gap:16px; max-width:calc(100vw - 40px); }
   .galv-tag{ display:flex; align-items:center; gap:16px; font-weight:700; font-size:36px; line-height:1; color:var(--iron); white-space:nowrap; }
   .galv-tag .gplus{ display:inline-flex; width:17px; height:17px; }
@@ -208,16 +209,17 @@
 
   /* TO UNLOCK — scrolls in over the pinned stage; the pin releases the moment it
      comes 100px from the list, so they travel up together from there */
-  .unlock{ position:relative; z-index:2; margin-top:calc(600px - 100vh); text-align:center; color:var(--ivory); }
+  .unlock{ position:relative; z-index:2; margin-top:calc(700px - 100vh); text-align:center; color:var(--ivory); }
   .unlock .us{ margin:30px auto 0; width:416px; max-width:80vw; font-size:14px; line-height:20px; }
 
   /* MEET THE KNOWLEDGE + THE FIVE VERBS — one pin: the head locks, the columns
      scroll up behind it and mask out, the verbs land beneath it and scrub */
-  .know-run{ position:relative; height:calc(100vh + 2000px); margin-top:140px; }
+  .know-run{ position:relative; height:calc(100vh + 1900px); margin-top:140px; }   /* real height set from the measured columns */
   .know-stick{ position:sticky; top:0; height:100vh; overflow:hidden; color:var(--iron); }
   .know-head{ position:absolute; top:140px; left:0; right:0; text-align:center; z-index:2; }
   .know-head .sub{ margin:9px auto 0; width:880px; max-width:100%; font-size:14px; line-height:20px; }
-  .know-window{ position:absolute; top:280px; bottom:0; left:50%; width:1280px; margin-left:-640px; overflow:hidden; }
+  /* window opens 100px under the head; the verbs also come to rest here */
+  .know-window{ position:absolute; top:359px; bottom:0; left:50%; width:1280px; margin-left:-640px; overflow:hidden; }
   .know-cols{ position:absolute; top:0; left:0; right:0; display:grid; grid-template-columns:repeat(3, 416px); column-gap:16px; will-change:transform; }
   .kcol{ border-top:1px solid var(--iron); }
   .kcol .cap{ display:flex; justify-content:space-between; margin-top:10px; }
@@ -242,16 +244,18 @@
   /* SECURITY */
   .sec{ margin-top:0; color:var(--iron); }
   .sec .ttl{ text-align:center; }
-  .sec-grid{ display:grid; grid-template-columns:632px 632px; column-gap:16px; margin-top:139px; align-items:start; }
+  .sec .ssub{ margin:9px auto 0; width:280px; text-align:center; font-size:14px; line-height:20px; }
+  .sec-grid{ display:grid; grid-template-columns:632px 632px; column-gap:16px; margin-top:90px; align-items:start; }
   .sit{ border-top:1px solid currentColor; height:71px; transition:height .45s cubic-bezier(.22,1,.36,1); overflow:hidden; position:relative; }
   .sit .idx{ position:absolute; left:0; top:10px; }
   .sit .stt{ position:absolute; left:108px; top:10px; font-weight:700; font-size:14px; line-height:20px; }
-  .sit .sbody{ position:absolute; left:108px; top:40px; width:440px; font-size:14px; line-height:20px;
+  .sit .sbody{ position:absolute; left:108px; top:41px; width:440px; font-size:14px; line-height:20px;
+    text-box:trim-both cap alphabetic;
     opacity:0; transform:translateY(8px); transition:opacity .4s ease .1s, transform .4s ease .1s; }
   .sit:hover .sbody{ opacity:1; transform:none; }
 
   /* CTA */
-  .ctasec{ margin-top:251px; }
+  .ctasec{ margin-top:200px; }
   .cta-card{ position:relative; width:1280px; max-width:100%; height:798px; border-radius:10px; overflow:hidden;
     background:#0c1622; color:var(--ivory); margin:0 auto; }
   .cta-card .bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
@@ -382,13 +386,12 @@
                 <source src="assets/v5/videos/video-2.mp4" type="video/mp4">
               </video>
               <div class="veil"></div>
-              <div class="hw-peek" id="hwPeekWin"><span class="tbx" id="hwPeek">Deploy.</span></div>
+              <div class="hw-belt" id="hwBelt"></div>
               <div class="hw-num">
                 <span class="hbrk l"><img src="assets/svg/bracket_light_left.svg" alt=""></span>
                 <span class="hw-numwin" id="hwNumWin"><span class="tbx">1</span></span>
                 <span class="hbrk r"><img src="assets/svg/bracket_light_right.svg" alt=""></span>
               </div>
-              <div class="hw-verbwin" id="hwVerbWin"><span class="tbx">Discover.</span></div>
               <div class="hw-subwin" id="hwSubWin"><span class="tbx">Understand how your business runs &amp; prioritise use-cases.</span></div>
             </div>
           </div>
@@ -483,16 +486,17 @@
       <!-- SECURITY AND CONTROL -->
       <section class="sec wrap" id="secSec">
         <h2 class="ttl h2 rise">Security and control.</h2>
+        <p class="ssub reveal">Optimise.Improve continuously as your<br>business &amp; the AI frontier evolve.</p>
         <div class="sec-grid">
           <div class="scol">
-            <div class="sit reveal"><span class="idx eyebrow">/01</span><span class="stt">Flexible deployment options.</span><span class="sbody">Fully managed, sealed on shared infrastructure, or inside your own Microsoft cloud.</span></div>
-            <div class="sit reveal"><span class="idx eyebrow">/02</span><span class="stt">Data governance.</span><span class="sbody">Never used to train public models. Encrypted at rest and in transit.</span></div>
-            <div class="sit reveal"><span class="idx eyebrow">/03</span><span class="stt">Access controls &amp; audit logs.</span><span class="sbody">Every interaction scoped, logged and traceable.</span></div>
+            <div class="sit reveal"><span class="idx eyebrow">/01</span><span class="stt">Flexible deployment options.</span><span class="sbody">Fully managed, sealed on shared infrastructure,<br>or inside your own Microsoft cloud.</span></div>
+            <div class="sit reveal"><span class="idx eyebrow">/03</span><span class="stt">Access controls &amp; audit logs.</span><span class="sbody">Least-privilege by design.<br>Every interaction scoped, logged and traceable.</span></div>
+            <div class="sit reveal"><span class="idx eyebrow">/05</span><span class="stt">Compliance.</span><span class="sbody">ISO 27001:2022. Cyber Essentials Plus.<br>GDPR.</span></div>
           </div>
           <div class="scol">
-            <div class="sit reveal"><span class="idx eyebrow">/04</span><span class="stt">Mirrored source-tool permissions.</span><span class="sbody">Identity from your Entra, Google, and role-based access.</span></div>
-            <div class="sit reveal"><span class="idx eyebrow">/05</span><span class="stt">Compliance.</span><span class="sbody">Least-privilege by design.</span></div>
-            <div class="sit reveal"><span class="idx eyebrow">/06</span><span class="stt">Command centre.</span><span class="sbody">Usage, spend and impact for every deployment, in one place.</span></div>
+            <div class="sit reveal"><span class="idx eyebrow">/02</span><span class="stt">Data governance.</span><span class="sbody">Encrypted at rest and in transit.<br>Never used to train public models.</span></div>
+            <div class="sit reveal"><span class="idx eyebrow">/04</span><span class="stt">Mirrored source-tool permissions.</span><span class="sbody">Identity from your Entra, Google,<br>and role-based access.</span></div>
+            <div class="sit reveal"><span class="idx eyebrow">/06</span><span class="stt">Command centre.</span><span class="sbody">Usage, spend and impact for every<br>deployment, in one place.</span></div>
           </div>
         </div>
       </section>
@@ -781,41 +785,32 @@
     ['3','Deepen.','Repeat on shared foundations that make the next set of use-cases easier.'],
     ['4','Optimise.','Improve continuously as your business & the AI frontier evolve.']
   ];
-  var hwNumWin=document.getElementById('hwNumWin'), hwVerbWin=document.getElementById('hwVerbWin');
-  var hwSubWin=document.getElementById('hwSubWin'), hwPeek=document.getElementById('hwPeek');
+  var hwNumWin=document.getElementById('hwNumWin');
+  var hwSubWin=document.getElementById('hwSubWin');
   var howRows=Array.prototype.slice.call(howRun.querySelectorAll('.srow'));
   var howIdx=0;
-  /* the verb hand-over: everything rides one belt — the incoming word travels in
-     from the peek's side while de-blurring, and the next word slides into the
-     peek frame on the same beat */
-  function swapVerb(txt, dir){
-    var win=hwVerbWin;
-    while(win.children.length>1) win.removeChild(win.firstElementChild);
-    var old=win.firstElementChild;
-    if(old.textContent===txt) return;
-    var nw=old.cloneNode(false); nw.textContent=txt;
-    nw.style.transition='none';
-    nw.style.transform='translateX('+(dir*46)+'%)';
-    nw.style.filter='blur(2px)'; nw.style.opacity='0.3';
-    win.appendChild(nw);
-    requestAnimationFrame(function(){ requestAnimationFrame(function(){
-      var tr='transform .7s cubic-bezier(.22,1,.36,1), filter .6s ease, opacity .6s ease';
-      old.style.transition=tr; nw.style.transition=tr;
-      old.style.transform='translateX('+(-dir*40)+'%)'; old.style.filter='blur(2px)'; old.style.opacity='0';
-      nw.style.transform='translateX(0)'; nw.style.filter='blur(0px)'; nw.style.opacity='1';
-      setTimeout(function(){
-        if(old.parentNode===win) win.removeChild(old);
-        nw.style.removeProperty('transition'); nw.style.removeProperty('filter'); nw.style.removeProperty('opacity');
-      }, 720);
-    });});
+  /* the verb belt: all four words live on one horizontal axis and simply slide,
+     re-blur and re-fade to their new distance from the active step */
+  var hwBelt=document.getElementById('hwBelt');
+  var beltEls=HOW.map(function(s){
+    var el=document.createElement('span'); el.textContent=s[1];
+    hwBelt.appendChild(el); return el;
+  });
+  var BELT_D=380;                                              // slot spacing: the next word peeks at the card's right edge
+  function applyBelt(a){
+    beltEls.forEach(function(el,i){
+      var d=i-a;
+      el.style.transform='translateX(calc(-50% + '+(d*BELT_D)+'px))';
+      el.style.filter='blur('+(d===0?0:2)+'px)';
+      el.style.opacity = d===0 ? 1 : (Math.abs(d)===1 ? 0.3 : 0);
+    });
   }
-  var hwPeekWin=document.getElementById('hwPeekWin');
+  applyBelt(0);
   function setHow(i){
     if(i===howIdx) return;
     var dir=i>howIdx?1:-1;
     howIdx=i;
-    swapVerb(HOW[i][1], dir);
-    swap(hwPeekWin, i<3 ? HOW[i+1][1] : '', dir, 'x');         // the following word rolls into the peek frame
+    applyBelt(i);
     swap(hwNumWin, HOW[i][0], dir, 'y');                       // brackets hold, the number changes
     swapUp(hwSubWin, HOW[i][2]);
     howRows.forEach(function(r,j){ r.classList.toggle('on', j===i); });
@@ -848,10 +843,17 @@
     vBgs.forEach(function(b,j){ b.classList.toggle('on', j===i); });
     verbRows.forEach(function(r,j){ r.classList.toggle('on', j===i); });
   }
+  var knowLead=800;                                            // set from the measured columns: cols height + 200
+  function sizeKnow(){
+    knowLead=knowCols.offsetHeight+200;
+    knowRun.style.height='calc(100vh + '+Math.round(knowLead+1200)+'px)';
+  }
+  sizeKnow(); addEventListener('resize', sizeKnow); addEventListener('load', sizeKnow);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(sizeKnow);
   verbRows.forEach(function(r){
     r.addEventListener('click', function(){
       var i=+r.getAttribute('data-i');
-      window.scrollTo({ top:Math.round(elTop(knowRun)+800+(i+0.5)*200), behavior:'smooth' });
+      window.scrollTo({ top:Math.round(elTop(knowRun)+knowLead+(i+0.5)*200), behavior:'smooth' });
     });
   });
 
@@ -881,8 +883,7 @@
 
   /* ---------- security: hover grows the row, later rows shift down ---------- */
   document.querySelectorAll('.sit').forEach(function(it){
-    var body=it.querySelector('.sbody');
-    it.addEventListener('mouseenter', function(){ it.style.height=(50+body.offsetHeight+10)+'px'; });
+    it.addEventListener('mouseenter', function(){ it.style.height='142px'; });   // one full row pitch, as the Figma variants
     it.addEventListener('mouseleave', function(){ it.style.height='71px'; });
   });
 
@@ -958,14 +959,14 @@
     var hp=clamp((sy-elTop(howRun))/(howRun.offsetHeight-vh),0,1);
     setHow(Math.min(3, Math.floor(hp*4)));
 
-    /* meet the knowledge pin: the columns start rising the moment the pin lands,
-       the verbs follow straight in, then 200px of scroll per verb */
+    /* meet the knowledge pin: one conveyor — the columns ride up 1:1 with the
+       scroll and the verbs follow exactly 200px behind them, docking 100px
+       under the head; then 200px of scroll per verb */
     var kpx=sy-elTop(knowRun);
-    var co=inv(kpx,0,500); co=co*co*(3-2*co);
-    knowCols.style.transform='translateY('+Math.round(-co*(knowCols.offsetHeight+120))+'px)';
-    var vin=inv(kpx,300,800); vin=vin*vin*(3-2*vin);
-    verbsInner.style.transform='translateY('+Math.round((1-vin)*(vh-280))+'px)';
-    setVerb(Math.min(4, Math.floor(inv(kpx,800,1800)*5)));
+    var colsY=-clamp(kpx,0,knowLead);
+    knowCols.style.transform='translateY('+colsY+'px)';
+    verbsInner.style.transform='translateY('+Math.max(0, knowLead-Math.max(0,kpx))+'px)';
+    setVerb(Math.min(4, Math.floor(inv(kpx,knowLead,knowLead+1000)*5)));
 
     /* galvanise scrub — v4 motion: snap between items, no fade; the section is
        pushed up by what follows once the pin releases */
@@ -1008,11 +1009,11 @@
     '  vec2 uv=(cellPx-0.5*res)/res.y;\n'+
     '  float w=waveField(uv,u_time);\n'+
     '  vec2 m=(u_pointer-0.5*res)/res.y; float d=length(uv-m);\n'+
-    '  w+=u_ripple*0.25*sin(d*16.0-u_time*3.2)*exp(-d*3.0);\n'+
+    '  w+=u_ripple*0.25*sin(d*16.0-u_time*3.2)*exp(-d*4.2);\n'+
     '  float horizon=uv.y*1.35+0.4*w+0.35;\n'+
     '  float fill=smoothstep(0.55,-0.55,horizon);\n'+
     '  float intensity=clamp(mix(fill,0.5+0.5*w,0.3)-0.12,0.0,1.0);\n'+
-    '  intensity=clamp(intensity-1.4*u_ripple*exp(-d*4.2),0.0,1.0);\n'+   // a tight pocket around the pointer thins the dither away
+    '  intensity=clamp(intensity-1.4*u_ripple*exp(-d*6.0),0.0,1.0);\n'+   // a tight pocket around the pointer thins the dither away
 
     '  float vy=gl_FragCoord.y/res.y;\n'+
     '  float mask=smoothstep(0.88,0.15,vy);\n'+
